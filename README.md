@@ -171,13 +171,77 @@ Bad: Zero values are viral, need nil considerations
 * don't make the dependency, take the dependency
 
 ## Vendoring
-Some thinks it's good, some not so much...
+https://github.com/gophercon/2016-talks/blob/master/WisdomOmuya-GoVendoringDeconstructed/GoVendoringDeconstructed.pdf
 
-Bad:
+Vendoring: Go 1.5 includes experimental support for using local copies of external dependencies to satisfy imports of those dependencies. So Go stores it's dependencies within the source of library!
+
+This has recently changed with newer versions of Go:
+* Import resolution happens in `$GOPATH/vendor` then in the parent's `vendor` and so on..
+* Vendoring inclusion:
+  * Go 1.4 no vendoring
+  * 1.5 Experimental through GO15VENDOREXPERIMENT env var
+  * 1.6 Default to have vendoring
+  * 1.7 Vendor is on, point of no return
+
+__Literally__ someone else's code is in your repository:
+```
+Example Layout
+/home/projects/
+    mongoproxy/
+        main.go
+        modules/
+          mongod/
+              proxy.go
+          vendor/
+              src/
+                  github.com/go-mgo/mgo <--- Depedency from someone else
+```
+Code?
+```
+import "github.com/go-mgo/mgo"
+```
+Build? Easy
+```
+export GOPATH=/home/projects/mongoproxy
+go build
+```
+
+Good things?
+* Depedencies don't change unless I update them.
+* Don't have to install dependencies like python
+  * No pip
+
+Bad things?
+* Automate dependency update?
 * Vendoring is now a requirement
 * No pip, npm... use 'go get' instead
 
+Impacts for BTI?
+* No pip!
+* Smaller Docker images
+* We don't care what dependencies you have, it's your code.
+
+### Examples of new Go Vendoring:
+https://github.com/drone/drone
+```
+vendor/
+  github.com/
+  gopkg.in/
+```
+
+### Examples of using 3rd party vendoring tools like Godep
+https://github.com/HewlettPackard/oneview-golang
+```
+Godeps/
+  Godeps.json
+  _workspace/
+    src/
+      github.com
+vendor/ <-- symlink
+```
+
 ## Binaries vs Dockerfiles?
+Statically compiled binaries vs Dockerfiles that build go? Hmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm... Both?
 
 ## Kubernetes?
 
