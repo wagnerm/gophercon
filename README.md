@@ -129,7 +129,13 @@ https://docs.google.com/presentation/d/1CxamWsvHReswNZc7N2HMV7WPFqS8pvlPVZcDegdC
 memory location on each new entry
 
 ## Go assembler
-Implementation recently changed
+Can't find slides :(
+
+Implementation recently changed - 1.6 replaced a suite of C programs, one per architecture, with a single binary, written in Go, that supports all architectures.
+
+The usual variables, GOOS and GOARCH, are sufficient to configure it for any environment.
+
+Go on other architectures?
 
 ## Practical Advice for Go Developers
 https://github.com/cep21/go-talks
@@ -243,9 +249,7 @@ vendor/ <-- symlink
 ## Binaries vs Dockerfiles?
 Statically compiled binaries vs Dockerfiles that build go? Hmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm... Both?
 
-## Kubernetes?
-
-## Docker?
+#### Docker?
 * Easy deployment
 * Static compile make small Docker images
 ```
@@ -256,6 +260,25 @@ COPY ./cmd /cmd
 CMD ["/cmd"]
 ```
 * _very_ small containers
+
+## Kubernetes Lightning talk (no slides)
+* Pre-setup a kubernetes cluster with 3 nodes
+* Custom scheduler written in Go
+  * Can customize the scheduler to deploy the containers based on binpack, cpu, etc
+  * Custom scheduler runs in a container in the kub cluster
+  * Attaches to the default scheduler in kubernetes so that there is schedule failover (2 schedules).
+* Created a deployment.yml file
+  * Specified custom scheduler
+  * Containers/Apps to run in the cluster (Some web apps with a load balancer)
+* Ran the deployment.yml file in the kub cluster, spun up 8 containers and scheduler
+* Can start a rolling update with the deployment.yml file for all the containers/apps
+
+Kelsey mentioned something about a credentials manager was running as a pob in the cluster.
+New services would bind to the credentials manager so your app doesn't have to have credentials.
+
+Kub workshop: https://github.com/kelseyhightower/intro-to-kubernetes-workshop
+Kub dockerfiles: https://github.com/kelseyhightower/kubernetes-docker-files
+The hard way https://github.com/kelseyhightower/kubernetes-the-hard-way
 
 # Links
 GopherCon 2016 Slides from most of the speakers: https://github.com/gophercon/2016-talks
