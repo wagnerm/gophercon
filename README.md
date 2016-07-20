@@ -123,8 +123,55 @@ Native support for concurrency. Just because the goroutines and channels are ava
 
 Demo: https://divan.github.io/posts/go_concurrency_visualize/
 
+## Inside the Map Implementation
+https://docs.google.com/presentation/d/1CxamWsvHReswNZc7N2HMV7WPFqS8pvlPVZcDegdC_T4/edit
+* hash and store into buckets, will double in size and copy elements to the new
+memory location on each new entry
+
+## Go assembler
+Implementation recently changed
+
+## Practical Advice for Go Developers
+https://github.com/cep21/go-talks
+
+Main topics:
+* Consider package name in struct names
+  Stuttering not acceptable:
+  Not:
+   var c client.Client
+  Optimal:
+   var v http.Client
+
+* Object construction
+  Using the struct
+   x := http.Client()
+  Zero value considerations
+   var c http.Client
+   y := bytes.Buffer{}
+Bad: Zero values are viral, need nil considerations
+
+* New() constructor functions that return and interface are not usually good
+  * Really big interfaces are hard to extend.
+  * Interfaces describe behavior, not large piles of junk
+
+* Logging
+  * (BAD) log.Println prints to std streams, many logging freamworks, cannot turn off
+  * (Good) push error up the stack
+
+* Interfaces
+  * Accept interfaces, return structs
+  * Export interfaces, keep all structs private
+  * Usually no need to include interfaces from outside your package/stdlib
+  * Avoid large interfaces - turn large interfaces into small interfaces with wrapper logic in the structs
+
+* Never panic, especially in a gorutine. In the Init might a good place to panic
+
+* don't construct for the user
+
+* don't make the dependency, take the dependency
+
 ## Vendoring
-Some thinks it's good, some no so much...
+Some thinks it's good, some not so much...
 
 Bad:
 * Vendoring is now a requirement
