@@ -11,7 +11,14 @@ Simplicity. Go programming is simple as well as the intended function of the pro
 
 # Talks
 
-## nil
+## Understanding nil
+* nil is the default value for a variable that is uninitalized. nil can be different types.
+* Defines the 'zero' value for a specific type
+  * int is 0
+  * string is ""
+* vars are not generally set to nil
+https://speakerdeck.com/campoy/understanding-nil
+https://tour.golang.org/basics/12
 
 ## Go Without the Operating System
 http://atmanos.org/talks/go-without-the-os-gophercon-2016/#1
@@ -70,6 +77,12 @@ Tools to data science:
   * Data lake good for storing persistent data in a consistent state
   * Git for data: view commits, file, diffs
 
+## Crypto for Go
+https://github.com/gophercon/2016-talks/tree/master/GeorgeTankersley-CryptoForGoDevelopers
+
+We should probably be using some type of crypto for password
+Provided code: https://github.com/gtank/cryptopasta
+
 ## Errors (the proverb thing)
 https://github.com/gophercon/2016-talks/tree/master/DaveCheney-DontCheckErrorsHandleThemGracefully
 Dave Cheney's blog: http://dave.cheney.net/
@@ -104,11 +117,11 @@ https://github.com/gophercon/2016-talks/tree/master/EmilyGu-PowerAndEleganceOfRe
 Allows program to examine its own structure and even alter it at runtime.
 Laws: https://blog.golang.org/laws-of-reflection
 
-## Concurrency
+## Visualizing Concurrency in Go
+https://divan.github.io/talks/2016/gophercon/
 Native support for concurrency. Just because the goroutines and channels are available to you doesn't mean you have to use them in your program.
 
-
-# Useful information for future BTI
+Demo: https://divan.github.io/posts/go_concurrency_visualize/
 
 ## Vendoring
 Some thinks it's good, some no so much...
